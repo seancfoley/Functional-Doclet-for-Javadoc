@@ -1,0 +1,83 @@
+<project name="Create IP Address API" default="run" basedir=".">
+	<description>Create IP address jar</description>
+		
+	<property name="rootOffset" value="."/>
+	<property name="rootdistdir" location="${rootOffset}/dist"/>
+	<property name="version" value="1.0"/>
+	<property name="jarExtension" value=".jar"/>
+	<property name="src_location" value="${rootOffset}/src" />
+	<property name="bin_location" value="${rootOffset}/bin" />
+					
+	<target name="check root dist dir">
+		<available property="rootdistdir.exists" file="${rootdistdir}" />
+	</target>
+	 
+	<target name="generate time stamps" >
+		<tstamp> <!-- creates the variables DSTAMP, TSTAMP, TODAY -->
+			<format property="timestamp.full" pattern="yyyyMMdd-HHmmss"/>
+		</tstamp>
+		<echo message="build date: ${DSTAMP}, build time: ${TSTAMP}"/>				
+		<property name="timestamp" value="${timestamp.full}"/>
+	</target>
+	
+	<target name="create dist name" depends="generate time stamps" >
+		<property name="archivename" value="IPAddress_v${version}_${timestamp}${jarExtension}" />
+		<property name="docletarchivename" value="FunctionalDoclet_v${version}_${timestamp}${jarExtension}" />
+		
+	</target>
+	
+	<target name="compile">
+		<property name="java_level" value="1.7"/>
+		<javac srcdir="${src_location}" destdir="${bin_location}" debug="on"
+				source="${java_level}" target="${java_level}" failonerror="false" >
+			<include name="$**/*.java"/>
+		</javac>
+	</target>
+	
+	<target name="create doclet jar" depends="compile, create dist name">	
+		<property name="docletarchiveloc" location="${rootdistdir}/${docletarchivename}" />
+		<jar destfile="${docletarchiveloc}" filesonly="true">
+			<manifest>
+				<attribute name="Version" value="${version}"/>
+			</manifest>
+			<fileset id="doclet.src" dir="${src_location}">
+				<include name="**/*.java" />
+				<include name="**/*.xml" />
+				<include name="**/*.properties" />
+				<include name="**/*.png" />
+			</fileset>
+			<fileset id="doclet.contents" dir="${bin_location}">
+				<include name="**/*.class" />
+			</fileset>
+		</jar>
+		<echo message ="Source files included: ${toString:doclet.src}" />
+	</target>
+	
+	<target name="clean binaries">
+		<echo message="deleting compiled files" />
+    	<delete verbose="false" includeemptydirs="true">
+    		<fileset dir="${bin_location}">
+    			<include name="**/*.class" />
+    		</fileset>
+    	</delete>
+	</target>
+
+<!-- ===================================================== 
+ Top level
+===================================================== --> 
+	
+	<target name="run" description="run" depends="create doclet jar">
+		<echo message="created doclet jar ${docletarchiveloc}"/>
+	</target>
+	
+<!-- ===================================================== 
+ Clean
+===================================================== --> 
+	
+	<target name="clean previous jars" depends="check root dist dir" if="rootdistdir.exists" description="remove previous distributions" >
+		<delete verbose="true" includeemptydirs="true">
+    		<fileset dir="${rootdistdir}" />
+    	</delete>
+	</target>
+
+</project>
