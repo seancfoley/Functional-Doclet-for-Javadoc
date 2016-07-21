@@ -23,7 +23,8 @@
 	<target name="create dist name" depends="generate time stamps" >
 		<property name="archivename" value="IPAddress_v${version}_${timestamp}${jarExtension}" />
 		<property name="docletarchivename" value="FunctionalDoclet_v${version}_${timestamp}${jarExtension}" />
-		
+		<property name="latestdocletarchivename" value="FunctionalDoclet${jarExtension}" />
+				
 	</target>
 	
 	<target name="compile">
@@ -51,6 +52,11 @@
 			</fileset>
 		</jar>
 		<echo message ="Source files included: ${toString:doclet.src}" />
+	</target>
+	
+	<target name="replace dist doclet jar" depends="create doclet jar">
+		<property name="latestdocletarchive" location="${rootdistdir}/${latestdocletarchivename}" />
+		<copy file="${docletarchiveloc}" tofile="${latestdocletarchive}" overwrite="true" verbose="true"/>
 	</target>
 	
 	<target name="clean binaries">

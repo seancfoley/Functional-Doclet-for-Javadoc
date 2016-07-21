@@ -12,6 +12,7 @@ import javax.xml.bind.DatatypeConverter;
 import com.sun.javadoc.PackageDoc;
 import com.sun.javadoc.RootDoc;
 import com.sun.tools.doclets.formats.html.CustomAllClassesFrameWriter;
+import com.sun.tools.doclets.formats.html.CustomHelpWriter;
 import com.sun.tools.doclets.formats.html.CustomPackageWriter;
 import com.sun.tools.doclets.formats.html.HtmlDoclet;
 import com.sun.tools.doclets.formats.html.PackageFrameWriter;
@@ -152,6 +153,7 @@ public class FunctionalDoclet extends HtmlDoclet {
 		 super.generateOtherFiles(root,  classtree);
 		 //this will overwrite the same files generated in super.generateOtherFiles
 		 CustomAllClassesFrameWriter.generate(configuration, new IndexBuilder(configuration, configuration.nodeprecated, true));
+		 CustomHelpWriter.generateCustom(configuration);
 	 }
 	 
 	@Override
