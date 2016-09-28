@@ -28,9 +28,24 @@ The functionally primary types of interest are clearly identified and separated 
    @custom.core
   */`
 
+### Command line
+
 When running the javadoc tool, add `-tag custom.core:a:Core` to your command line.  Use tools.doclets.formats.html.FunctionalDoclet as the doclet (options `-doclet` and `-docletpath`).  Use stylesheet_custom.css as the stylesheet (option `-stylesheetfile`).
+
+### With Ant
+
+```
+<javadoc sourcepath="${src_location}" destdir="${rootjavadocdir}"
+			stylesheetfile="${functional_doclet_dir}/stylesheet_custom.css">
+			<doclet name="tools.doclets.formats.html.FunctionalDoclet"
+				path="${functional_doclet_dir}/dist/FunctionalDoclet.jar">
+				 <param name="-tag" value="custom.core:a:Core" />
+			</doclet>
+	</javadoc>
+```
 
 ## Dependencies
 
 This doclet requires a Java 8 SDK, it is built on top of the Java 8 Javadoc code.
+It can be run anywhere, but it was built with Eclipse Mars 2, and can easily be imported into Eclipse with the existing Eclipse project files.
 
