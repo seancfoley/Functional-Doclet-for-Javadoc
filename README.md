@@ -1,7 +1,7 @@
 # Functional-Doclet-for-Javadoc
 A doclet with more emphasis on organizing by function rather than organizing by categories of reference types
 
-[Here is an example](https://seancfoley.github.io/IPAddress/IPAddress/apidocs/) for this [library] (https://github.com/seancfoley/IPAddress)
+[Here is an example](https://seancfoley.github.io/IPAddress/IPAddress/apidocs/) for the [Java library IPAddress] (https://github.com/seancfoley/IPAddress)
 
 ## Standard Javadoc
 Standard Javadoc organizes types according to the categories: interfaces, classes, enums, exceptions and errors.  From the point of view of a user attempting to understand your code, this is not an optimal presentation.  Firstly, here is no indication regarding which types may be most important and should be examined first.  While package names are sometimes indicative, withing a given package there is no indication.  Additionally, the division between interfaces, classes, enums, exceptions and errors is somewhat arbitrary.  For instance, the difference between an interface and an abstract class can be small and meaningless at times.  Similarly, an enum can often have little difference from a non-enum class since an enum can have any number of fields and methods, and sometimes non-enum classes are used for lists and ordering. 
