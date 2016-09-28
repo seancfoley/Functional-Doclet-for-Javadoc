@@ -12,8 +12,8 @@ Grouping types in this manner is not functionally meaningful, which is what gene
 This doclet modifies the standard doclet in the following manners:
 * Classes/interfaces/enums of primary interest are denoted as "core", by using an annotation in the code, and shown separately within the javadoc
 * The remaining types are divided into the categories of those things not "thrown" (classes, interfaces, enums) and those things that are "thrown" (exceptions and errors)
-* For those nested types within the same category as their enclosing type, the nested types are as nested within their parent types inside the javadoc, just like in the code
-* Identifies interfaces, classes, and enums with icons.
+* Nested types are as nested within their parent types inside the javadoc, just like in the code.
+* Icons for interfaces, classes, and enums
 
 ![sample](https://github.com/seancfoley/Functional-Doclet-for-Javadoc/blob/master/Functional%20Doclet%20for%20Javadoc/sample.png)
 
