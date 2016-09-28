@@ -17,7 +17,9 @@ This doclet modifies the standard doclet in the following manners:
 
 ![sample](https://github.com/seancfoley/Functional-Doclet-for-Javadoc/blob/master/Functional%20Doclet%20for%20Javadoc/sample.png)
 
-Organizing the types in this manner provides a more functional perspective of the code.  The primary types of interest are clearly identified, and the remaining non-primary types are grouped together with only throwable types separated.  Nested classes are functionally associated with their enclosing types.  Icons are used to indicate interfaces, classes and enums, rather than groupings.
+Organizing the types in this manner provides a more functional visual perspective of the code.
+
+The functionally primary types of interest are clearly identified and separated in the javadoc, throwable types are separated from the remaining, and nested classes are associated with their enclosing types.
 
 ## Usage
 
@@ -27,3 +29,8 @@ Organizing the types in this manner provides a more functional perspective of th
   */`
 
 When running the javadoc tool, add `-tag custom.core:a:Core` to your command line.  Use tools.doclets.formats.html.FunctionalDoclet as the doclet (options `-doclet` and `-docletpath`).  Use stylesheet_custom.css as the stylesheet (option `-stylesheetfile`).
+
+## Dependencies
+
+This doclet requires a Java 8 SDK, it is built on top of the Java 8 Javadoc code.
+
