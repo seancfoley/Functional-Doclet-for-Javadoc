@@ -95,8 +95,20 @@ public class FunctionalDoclet extends HtmlDoclet {
 		}		
 	}
 	
+	/*
+	 
+ */
 	public static String EXPAND_COLLAPSE_SCRIPTS = 
 		"<script type=text/javascript>" + 
+		"function addWindowOnload(func) {\n" +
+		" var currentOnload = window.onload;\n" +
+		" if (!currentOnload || typeof currentOnload != 'function') {\n" +
+		"  window.onload = func;\n" +
+		" } else window.onload = function() {\n" +
+		"  currentOnload();\n" +
+		"  func();\n" +
+		" }\n" +
+		"}\n" +
 		"function switchOutImg(imageId, matchSrc, matchTitle, newSrc, newTitle) {\n" +
 		" var img = document.getElementById(imageId);\n" +
 		" if(img && img.title == matchTitle) { img.src = newSrc; img.title = newTitle; }\n" + 

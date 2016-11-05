@@ -159,15 +159,15 @@ public class CustomAllClassesFrameWriter extends AllClassesFrameWriter {
 		public Content getToggleAllContent() {
 			if(toggleAllString.length() > 0) {
 				String toggleStr = toggleAllVar + " = !" + toggleAllVar + "; ";
-				String funcName = idPrefix + "toggleAll()";
+				String funcName = idPrefix + "toggleAll";
 				RawHtml rawHtml = new RawHtml(
 						"<script>var " + toggleAllVar + " = false;\n" +
-							"function " + funcName + " {\n" +
+							"function " + funcName + "() {\n" +
 							toggleAllString +
 							"}\n" +
 						"</script>" + 
-						"<a href=# onclick=\"" + toggleStr + funcName + "; this.innerHTML=" + toggleAllVar + " ? 'Hide Nested' : 'Show Nested'; return false;\">Show Nested</a>" +
-						"<script>window.onload = function () {" + funcName + ";};</script><br><br>"
+						"<a href=# onclick=\"" + toggleStr + funcName + "(); this.innerHTML=" + toggleAllVar + " ? 'Hide Nested' : 'Show Nested'; return false;\">Show Nested</a>" +
+						"<script>addWindowOnload(" + funcName + ");</script><br><br>"
 						);
 				return rawHtml;
 			}
