@@ -91,13 +91,13 @@ public class CustomAllClassesFrameWriter extends AllClassesFrameWriter {
        		 new String[] {"Type Name", "Description"});
 	   	addList(table, wantFrames, content);
 	   	table = CustomPackageSummaryBuilder.buildTableStructure(nonCore.toArray(new ClassDoc[nonCore.size()]), 
-       		 "Classes, Interfaces, and Enums",
-       		 "Class, Interface, and Enum Names and Descriptions",
+       		 "Interfaces, Classes, and Enums",
+       		 "Interface, Class, and Enum Names and Descriptions",
        		 new String[] {"Type Name", "Description"});
 	   	addList(table, wantFrames, content);
 	   	table = CustomPackageSummaryBuilder.buildTableStructure(throwables.toArray(new ClassDoc[throwables.size()]), 
-       		 "Exceptions and Errors",
-       		 "Exception and Error Names and Descriptions",
+       		 "Throwables",
+       		 "Throwable Names and Descriptions",
        		 new String[] {"Type Name", "Description"});
 	   	addList(table, wantFrames, content);
 	   	table = CustomPackageSummaryBuilder.buildTableStructure(annotations.toArray(new ClassDoc[annotations.size()]), 

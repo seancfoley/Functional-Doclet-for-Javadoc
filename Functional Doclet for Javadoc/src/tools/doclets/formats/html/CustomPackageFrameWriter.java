@@ -99,14 +99,16 @@ public class CustomPackageFrameWriter extends PackageFrameWriter {
         		 "Core Type Names and Descriptions",
         		 new String[] {"Type Name", "Description"});
          addClassKindListing(table, contentTree);
+         
+       //TODO split off interfaces and I think enums too
          table = CustomPackageSummaryBuilder.buildTableStructure(nonCore.toArray(new ClassDoc[nonCore.size()]), 
         		 "Types",
         		 "Type Names and Descriptions",
         		 new String[] {"Type Name", "Description"});
          addClassKindListing(table, contentTree);
          table = CustomPackageSummaryBuilder.buildTableStructure(throwables.toArray(new ClassDoc[throwables.size()]), 
-        		 "Exceptions and Errors",
-        		 "Exception and Error Type Names and Descriptions",
+        		 "Throwables",
+        		 "Throwable Names and Descriptions",
         		 new String[] {"Type Name", "Description"});
          addClassKindListing(table, contentTree);
          table = CustomPackageSummaryBuilder.buildTableStructure(annotations.toArray(new ClassDoc[annotations.size()]), 

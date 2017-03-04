@@ -69,8 +69,8 @@ public class FunctionalDoclet extends HtmlDoclet {
 	}
 	
 	public static String RIGHT_ARROW_SRC, DOWN_ARROW_SRC, BLANK_ARROW_SRC;
-	public static String CLASS_IMG, INTERFACE_IMG, ENUM_IMG, ANNOTATION_IMG, BLANK_ARROW_IMG;
-	public static String CLASS_DIV, INTERFACE_DIV, ENUM_DIV, ANNOTATION_DIV;
+	public static String CLASS_IMG, THROWABLE_IMG, INTERFACE_IMG, ENUM_IMG, ANNOTATION_IMG, BLANK_ARROW_IMG;
+	public static String CLASS_DIV, THROWABLE_DIV, INTERFACE_DIV, ENUM_DIV, ANNOTATION_DIV;
 	
 	static {
 		try {
@@ -81,6 +81,9 @@ public class FunctionalDoclet extends HtmlDoclet {
 			String src = getImageSrc("/tools/doclets/formats/html/class_obj.png");
 			CLASS_IMG = getImage(src);
 			CLASS_DIV = getImageStyle(src);
+			src = getImageSrc("/tools/doclets/formats/html/throwable_obj.png");
+			THROWABLE_IMG = getImage(src);
+			THROWABLE_DIV = getImageStyle(src);
 			src = getImageSrc("/tools/doclets/formats/html/int_obj.png");
 			INTERFACE_IMG = getImage(src);
 			INTERFACE_DIV = getImageStyle(src);
@@ -101,37 +104,37 @@ public class FunctionalDoclet extends HtmlDoclet {
 	public static String EXPAND_COLLAPSE_SCRIPTS = 
 		"<script type=text/javascript>" + 
 		"function addWindowOnload(func) {\n" +
-		" var currentOnload = window.onload;\n" +
-		" if (!currentOnload || typeof currentOnload != 'function') {\n" +
-		"  window.onload = func;\n" +
-		" } else window.onload = function() {\n" +
-		"  currentOnload();\n" +
-		"  func();\n" +
-		" }\n" +
+		"    var currentOnload = window.onload;\n" +
+		"    if (!currentOnload || typeof currentOnload != 'function') {\n" +
+		"     window.onload = func;\n" +
+		"    } else window.onload = function() {\n" +
+		"     currentOnload();\n" +
+		"     func();\n" +
+		"    }\n" +
 		"}\n" +
 		"function switchOutImg(imageId, matchSrc, matchTitle, newSrc, newTitle) {\n" +
-		" var img = document.getElementById(imageId);\n" +
-		" if(img && img.title == matchTitle) { img.src = newSrc; img.title = newTitle; }\n" + 
+		"    var img = document.getElementById(imageId);\n" +
+		"    if(img && img.title == matchTitle) { img.src = newSrc; img.title = newTitle; }\n" + 
 		"}\n" +
 		"function showContentCheckImage(contentDivId, show, imageId, matchSrc, matchTitle, newSrc, newTitle) {\n" +
-		" var div = document.getElementById(contentDivId);\n" + //the div enclosing the content to be shown or hidden
-		" div.style.display = show ? 'block' : 'none';\n" +
-		" if(imageId) switchOutImg(imageId, matchSrc, matchTitle, newSrc, newTitle);\n" +
+		"    var div = document.getElementById(contentDivId);\n" + //the div enclosing the content to be shown or hidden
+		"    div.style.display = show ? 'block' : 'none';\n" +
+		"    if(imageId) switchOutImg(imageId, matchSrc, matchTitle, newSrc, newTitle);\n" +
 		"}\n" +
 		"function showContent(contentDivId, show, imageId, showSrc, hideSrc, showTitle, hideTitle) {\n" +
-		" var div = document.getElementById(contentDivId);\n" + //the div enclosing the content to be shown or hidden
-		" div.style.display = show ? 'block' : 'none';\n" +
-		" if(imageId) {\n" +
-		" 	var img = document.getElementById(imageId);\n" +  //the toggle image
-		" 	img.src = show ? showSrc : hideSrc;\n" +
-		" 	img.title = show ? showTitle : hideTitle;\n" + 
-		" }\n" +
+		"    var div = document.getElementById(contentDivId);\n" + //the div enclosing the content to be shown or hidden
+		"    div.style.display = show ? 'block' : 'none';\n" +
+		"    if(imageId) {\n" +
+		"    	var img = document.getElementById(imageId);\n" +  //the toggle image
+		"    	img.src = show ? showSrc : hideSrc;\n" +
+		"    	img.title = show ? showTitle : hideTitle;\n" + 
+		"    }\n" +
 		"}\n" +
 		"function toggleContent(contentDivId, imageId, hideSrc, showSrc, hideTitle, showTitle) {\n" +
-		" var div = document.getElementById(contentDivId);\n" + //the div enclosing the content to be shown or hidden
-		" var show = (div.style.display == 'none');\n" +
-		" showContent(contentDivId, show, imageId, hideSrc, showSrc, hideTitle, showTitle);\n" +
-		" return show;\n" +
+		"    var div = document.getElementById(contentDivId);\n" + //the div enclosing the content to be shown or hidden
+		"    var show = (div.style.display == 'none');\n" +
+		"    showContent(contentDivId, show, imageId, hideSrc, showSrc, hideTitle, showTitle);\n" +
+		"    return show;\n" +
 		"}"  + 
 		"</script>";
 	

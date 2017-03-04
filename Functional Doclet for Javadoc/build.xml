@@ -28,10 +28,10 @@
 	</target>
 	
 	<target name="compile">
-		<property name="java_level" value="1.7"/>
+		<property name="java_level" value="1.8"/>
 		<javac srcdir="${src_location}" destdir="${bin_location}" debug="on"
 				source="${java_level}" target="${java_level}" failonerror="false" >
-			<include name="$**/*.java"/>
+			<include name="**/*.java"/>
 		</javac>
 	</target>
 	

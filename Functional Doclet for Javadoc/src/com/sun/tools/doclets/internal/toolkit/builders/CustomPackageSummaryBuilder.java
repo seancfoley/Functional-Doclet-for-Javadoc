@@ -3,6 +3,7 @@ package com.sun.tools.doclets.internal.toolkit.builders;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -159,7 +160,8 @@ public class CustomPackageSummaryBuilder {
     void buildAllClassesSummary(Content packageContentTree) {
     	ClassDoc[] everything =  packageDoc.isIncluded() ? packageDoc.allClasses(true) : configuration.classDocCatalog.allClasses(Util.getPackageName(packageDoc));
     	everything = Util.filterOutPrivateClasses(everything, configuration.javafx);
-        Arrays.sort(everything);
+       // Arrays.sort(everything);
+        
     	//we have four groups.  Annotations are not handled here.  Exceptions and errors are grouped.  The rest is grouped into core and not core.
     	 ArrayList<ClassDoc> core = new ArrayList<ClassDoc>();
     	 ArrayList<ClassDoc> throwables = new ArrayList<ClassDoc>();
@@ -180,14 +182,26 @@ public class CustomPackageSummaryBuilder {
         		 "Core Type Names and Descriptions",
         		 new String[] {"Type Name", "Description"});
          packageWriter.addClassesSummaryTable(table, packageContentTree);
+         
+         //TODO split off interfaces, and I think you want to split off enums too
+//         xxxx BUT xxxx
+//         then what about the nesting 
+//         OK, let's separate interfaces, but leave enums where they are, since an enum is usually associated
+//         with the enclosing class, in fact a nested interface is too
+//         we have no nested interface, but we do have classes nested inside an interface, AddressComparator
+//         oh, we do have a nested interface, AddressSegmentCreator
+//         OH, maybe we keep one section, but we order differently!  Yeah!
+        
+//         xxxxx;
+         
          table = buildTableStructure(nonCore.toArray(new ClassDoc[nonCore.size()]), 
-        		 "Classes, Interfaces, and Enums",
+        		 "Interfaces, Classes and Enums",
         		 "Class, Interface, and Enum Names and Descriptions",
         		 new String[] {"Type Name", "Description"});
          packageWriter.addClassesSummaryTable(table, packageContentTree);
          table = buildTableStructure(throwables.toArray(new ClassDoc[throwables.size()]), 
-        		 "Exceptions and Errors",
-        		 "Exception and Error Names and Descriptions",
+        		 "Throwables",
+        		 "Throwable Names and Descriptions",
         		 new String[] {"Type Name", "Description"});
          packageWriter.addClassesSummaryTable(table, packageContentTree);
     }
@@ -195,37 +209,60 @@ public class CustomPackageSummaryBuilder {
     public static Table buildTableStructure(ClassDoc classes[], String label, String tableSummary, String tableHeader[]) {
     	ArrayList<ClassDoc> allList = new ArrayList<ClassDoc>(classes.length);
     	allList.addAll(Arrays.asList(classes));
+    	
     	//Collections.sort(allList);
     	 HashMap<String, TableEntry> mapping = new HashMap<String, TableEntry>();
          List<TableEntry> roots = new ArrayList<TableEntry>(allList.size());
+         
+         
+         for(int i = 0; i < allList.size(); i++) {
+	    	  ClassDoc classDoc = allList.get(i);
+	    	  String name = classDoc.name();
+	    	   TableEntry entry = new TableEntry(classDoc);
+	    	  mapping.put(name, entry);
+         }
+         
          top:
 	    for(int i = 0; i < allList.size(); i++) {
 	    	  ClassDoc classDoc = allList.get(i);
 	    	  String name = classDoc.name();
 	    	  String containerName = name;
-	    	  TableEntry entry = new TableEntry(classDoc);
-	    	  mapping.put(name, entry);
-	    	  int nestedIndex = name.lastIndexOf('.');
-	    	  while(nestedIndex > 0) {
-		    	  containerName = containerName.substring(0, nestedIndex);
-		    	  if(nestedIndex >= 0) {
-		    		  TableEntry container = mapping.get(containerName);
-		    		  if(container != null) {
-		    			  String relativeName = name.substring(nestedIndex + 1);
-		    			  entry.setRelativeName(relativeName);
-		    			  container.add(entry);
-		    			  
-		    			  continue top;
-		    		  }
-		    		  nestedIndex = containerName.lastIndexOf('.');
-		    		 continue;
-		    	  }
-		    	break;
-	    	  }
+	    	  TableEntry entry = mapping.get(name);
 	    	  
+	    	  //Given A.B.C, we look to see if parent A.B has been added to our mapping, and if so, we nest A.B.C inside A.B
+	    	  //Otherwise A.B.C is a root
+	    	  int nestedIndex = name.lastIndexOf('.');
+	    	  if(nestedIndex >= 0) {
+		    	  containerName = containerName.substring(0, nestedIndex);
+	    	 	  TableEntry container = mapping.get(containerName);
+	    		  if(container != null) {
+	    			  String relativeName = name.substring(nestedIndex + 1);
+	    			  entry.setRelativeName(relativeName);
+	    			  container.add(entry);
+	    			  continue top;
+	    		  } 
+	    	  }
 	    	  roots.add(entry);
 	      }
+         System.out.println(roots);
+         roots.sort(new Comparator<TableEntry>() {
+			@Override
+			public int compare(TableEntry o1, TableEntry o2) {
+				ClassDoc c1 = o1.classDoc;
+				ClassDoc c2 = o2.classDoc;
+				int c1TypeType = c1.isInterface() ? 0 : (c1.isAnnotationType() ? 3 : (c1.isEnum() ? 2 : 1));
+				int c2TypeType = c2.isInterface() ? 0 : (c2.isAnnotationType() ? 3 : (c2.isEnum() ? 2 : 1));
+				int result = c1TypeType - c2TypeType;
+				if(result == 0) {
+					result = c1.compareTo(c2);
+				}
+				return result;
+			}
+        	 
+         });
          Table table = new Table(label, tableSummary, tableHeader, roots);
+         System.out.println(roots);
+         
          return table;
     }
 

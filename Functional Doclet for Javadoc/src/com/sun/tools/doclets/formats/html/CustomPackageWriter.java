@@ -95,6 +95,8 @@ public class CustomPackageWriter extends PackageWriterImpl {
     		style = FunctionalDoclet.ENUM_DIV;
     	} else if(classDoc.isInterface()) {
     		style = FunctionalDoclet.INTERFACE_DIV;
+    	} else if(classDoc.isException() || classDoc.isError()) {
+    		style = FunctionalDoclet.THROWABLE_DIV;
     	} else {
     		style = FunctionalDoclet.CLASS_DIV;
     	}
@@ -109,7 +111,9 @@ public class CustomPackageWriter extends PackageWriterImpl {
    		img = FunctionalDoclet.ENUM_IMG;
    	} else if(classDoc.isInterface()) {
    		img = FunctionalDoclet.INTERFACE_IMG;
-   	} else {
+   	} else if(classDoc.isException() || classDoc.isError()) {
+		img = FunctionalDoclet.THROWABLE_IMG;
+	} else {
    		img = FunctionalDoclet.CLASS_IMG;
    	}
    	return new RawHtml(img);
