@@ -183,17 +183,6 @@ public class CustomPackageSummaryBuilder {
         		 new String[] {"Type Name", "Description"});
          packageWriter.addClassesSummaryTable(table, packageContentTree);
          
-         //TODO split off interfaces, and I think you want to split off enums too
-//         xxxx BUT xxxx
-//         then what about the nesting 
-//         OK, let's separate interfaces, but leave enums where they are, since an enum is usually associated
-//         with the enclosing class, in fact a nested interface is too
-//         we have no nested interface, but we do have classes nested inside an interface, AddressComparator
-//         oh, we do have a nested interface, AddressSegmentCreator
-//         OH, maybe we keep one section, but we order differently!  Yeah!
-        
-//         xxxxx;
-         
          table = buildTableStructure(nonCore.toArray(new ClassDoc[nonCore.size()]), 
         		 "Interfaces, Classes and Enums",
         		 "Class, Interface, and Enum Names and Descriptions",
@@ -244,7 +233,6 @@ public class CustomPackageSummaryBuilder {
 	    	  }
 	    	  roots.add(entry);
 	      }
-         System.out.println(roots);
          roots.sort(new Comparator<TableEntry>() {
 			@Override
 			public int compare(TableEntry o1, TableEntry o2) {

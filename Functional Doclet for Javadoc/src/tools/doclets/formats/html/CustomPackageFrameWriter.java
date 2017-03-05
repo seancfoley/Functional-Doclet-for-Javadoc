@@ -100,7 +100,6 @@ public class CustomPackageFrameWriter extends PackageFrameWriter {
         		 new String[] {"Type Name", "Description"});
          addClassKindListing(table, contentTree);
          
-       //TODO split off interfaces and I think enums too
          table = CustomPackageSummaryBuilder.buildTableStructure(nonCore.toArray(new ClassDoc[nonCore.size()]), 
         		 "Types",
         		 "Type Names and Descriptions",
